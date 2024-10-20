@@ -13,7 +13,7 @@ async function createContainer(req, res) {
     const containerName = `nodejs-container-${crypto.randomUUID()}`; // Unique container name
 
     // const randomPort = 3001
-    const randomPort = await getPort();
+    const randomPort = (await getPort()).toString();
 
     const container = await docker.createContainer({
       Image: "node:latest",
@@ -24,11 +24,11 @@ async function createContainer(req, res) {
       ],
       name: containerName,
       ExposedPorts: {
-        "3000/tcp": {}, // React dev server runs on port 3000 by default
+        [`${randomPort}/tcp`]: {}, // React dev server runs on port 3000 by default
       },
       HostConfig: {
         PortBindings: {
-          "3000/tcp": [{ HostPort: randomPort.toString() }], // Bind random host port to container's port 3000
+          [`${randomPort}/tcp`]: [{ HostPort: randomPort }], // Bind random host port to container's port 3000
         },
       },
     });
