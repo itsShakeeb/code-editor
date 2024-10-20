@@ -9,7 +9,7 @@ app.use(express.json());
 app.post("/create-container", async (req, res) => {
   try {
     const container = await docker.createContainer({
-      Image: "node:20-alpine3.20",
+      Image: "node:latest",
       Cmd: ["node", "-e", "console.log('Hello from the container')"],
       name: `nodejs-container-${Date.now()}`,
     });
