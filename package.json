@@ -2,10 +2,11 @@
   "name": "Server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "commonjs",
   "license": "MIT",
   "dependencies": {
     "dockerode": "^4.0.2",
     "express": "^4.21.1",
-    "get-port": "^7.1.0"
+    "get-port": "^5.1.1"
   }
 }

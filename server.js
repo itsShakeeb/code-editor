@@ -1,6 +1,5 @@
 const express = require("express");
 const Docker = require("dockerode");
-const container = require("./routes/create-container");
 
 const app = express();
 
@@ -10,7 +9,7 @@ const docker = new Docker({
 });
 
 app.use(express.json());
-app.use("/container", container);
+app.use("/container", require("./routes/create-container"));
 
 app.post("/stop-container", async (req, res) => {
   const { containerId } = req.body;

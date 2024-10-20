@@ -12,6 +12,7 @@ async function createContainer(req, res) {
     // Generate a unique name for each container (using uuid or Date)
     const containerName = `nodejs-container-${crypto.randomUUID()}`; // Unique container name
 
+    // const randomPort = 3001
     const randomPort = await getPort();
 
     const container = await docker.createContainer({
