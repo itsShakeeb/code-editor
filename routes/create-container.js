@@ -34,7 +34,7 @@ async function createContainer(req, res) {
       HostConfig: {
         PortBindings: {
           // [`${port}/tcp`]: [{ HostPort: port }], // Bind random host port to container's port 3000
-          "3000/tcp": [{ HostPort: port }], // Bind random host port to container's port 3000
+          "3000/tcp": [{ HostPort: "3000" }], // Bind random host port to container's port 3000
         },
       },
     });
