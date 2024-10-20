@@ -11,6 +11,7 @@ async function createContainer(req, res) {
   try {
     // Generate a unique name for each container (using uuid or Date)
     const containerName = `nodejs-container-${crypto.randomUUID()}`; // Unique container name
+    const appName = `react-app-${crypto.randomUUID()}`; //Unique react app name
 
     // const randomPort = 3001
     const randomPort = (await getPort()).toString();
@@ -20,15 +21,16 @@ async function createContainer(req, res) {
       Cmd: [
         "sh", // to execute shell command
         "-c", // arguments to tell docker to treat as single command after that
-        "npx create-react-app my-app && cd my-app && npm i && npm start -- --host 0.0.0.0 --port " + randomPort,
+        `npx create-react-app ${appName} && cd ${appName} && npm i && npm start -- --host 0.0.0.0 --port ${3000}`,
       ],
       name: containerName,
+      Tty: true,
       ExposedPorts: {
-        [`${randomPort}/tcp`]: {}, // React dev server runs on port 3000 by default
+        [`${3000}/tcp`]: {}, // React dev server runs on port 3000 by default
       },
       HostConfig: {
         PortBindings: {
-          [`${randomPort}/tcp`]: [{ HostPort: randomPort }], // Bind random host port to container's port 3000
+          [`${3000}/tcp`]: [{ HostPort: randomPort }], // Bind random host port to container's port 3000
         },
       },
     });
