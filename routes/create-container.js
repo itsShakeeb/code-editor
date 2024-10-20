@@ -28,11 +28,13 @@ async function createContainer(req, res) {
       name: containerName,
       Tty: true,
       ExposedPorts: {
-        [`${port}/tcp`]: {}, // React dev server runs on port port by default
+        // [`${port}/tcp`]: {}, // React dev server runs on port port by default
+        "3000/tcp": {}, // React dev server runs on port port by default
       },
       HostConfig: {
         PortBindings: {
-          [`${port}/tcp`]: [{ HostPort: port }], // Bind random host port to container's port 3000
+          // [`${port}/tcp`]: [{ HostPort: port }], // Bind random host port to container's port 3000
+          "3000/tcp": [{ HostPort: port }], // Bind random host port to container's port 3000
         },
       },
     });
