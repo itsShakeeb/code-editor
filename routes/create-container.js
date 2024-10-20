@@ -20,7 +20,7 @@ async function createContainer(req, res) {
       Cmd: [
         "sh", // to execute shell command
         "-c", // arguments to tell docker to treat as single command after that
-        "npx create-react-app my-app && cd my-app && npm i && npm start -- --host 0.0.0.0 --port 3000",
+        "npx create-react-app my-app && cd my-app && npm i && npm start -- --host 0.0.0.0 --port " + randomPort,
       ],
       name: containerName,
       ExposedPorts: {
