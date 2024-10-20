@@ -1,5 +1,6 @@
 const express = require("express");
 const Docker = require("dockerode");
+const container = require("./routes/create-container");
 
 const app = express();
 
@@ -9,52 +10,7 @@ const docker = new Docker({
 });
 
 app.use(express.json());
-
-app.post("/create-container", async (req, res) => {
-  console.log("request hit");
-
-  try {
-    const container = await docker.createContainer({
-      Image: "node:latest",
-      Cmd: [
-        "sh", // to execute shell command
-        "-c", // arguments to tell docker to treat as single command after that
-        "npx create-react-app my-app && cd my-app && npm i && npm start",
-      ],
-      name: `react-app-${Date.now()}`,
-      ExposedPorts: {
-        "3000/tcp": {}, // React dev server runs on port 3000 by default
-      },
-      HostConfig: {
-        PortBindings: {
-          "3000/tcp": [
-            {
-              HostPort: "3000", // Bind container's port 3000 to host's port 3000
-            },
-          ],
-        },
-      },
-    });
-
-    await container.start();
-    console.log("Container started:", container.id);
-
-    const containerInfo = await container.inspect();
-    const containerIP = containerInfo.NetworkSettings.IPAddress;
-
-    console.log("React app running at:", `http://${containerIP}:3000`);
-
-    res.status(200).json({
-      message: "Container started successfully",
-      containerId: container.id,
-    });
-  } catch (err) {
-    res.status(500).json({
-      message: "Error creating container",
-      error: err.message,
-    });
-  }
-});
+app.use("/container", container);
 
 app.post("/stop-container", async (req, res) => {
   const { containerId } = req.body;

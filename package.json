@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "dockerode": "^4.0.2",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "get-port": "^7.1.0"
   }
 }
