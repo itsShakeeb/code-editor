@@ -3,10 +3,10 @@ const Docker = require("dockerode");
 
 const app = express();
 
-// const docker = new Docker({
-//   host: "127.0.0.1", // or 'localhost'
-//   port: 2375,
-// });
+const docker = new Docker({
+  // host: "127.0.0.1", // or 'localhost'
+  // port: 2375,
+});
 
 app.use(express.json());
 
