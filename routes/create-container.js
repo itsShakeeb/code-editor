@@ -18,7 +18,7 @@ async function createContainer(req, res) {
     const port = randomPort.toString();
 
     const container = await docker.createContainer({
-      Image: "node:latest",
+      Image: "node:alpine",
       Cmd: [
         "sh", // to execute shell command
         "-c", // arguments to tell docker to treat as single command after that
@@ -26,6 +26,7 @@ async function createContainer(req, res) {
         `npx create-react-app my-app && cd my-app && npm i && npm start -- --host 0.0.0.0 --port 3000`,
       ],
       name: containerName,
+      WorkingDir: "/my-app",
       // Tty: true,
       ExposedPorts: {
         // [`${port}/tcp`]: {}, // React dev server runs on port port by default
@@ -34,7 +35,10 @@ async function createContainer(req, res) {
       HostConfig: {
         PortBindings: {
           // [`${port}/tcp`]: [{ HostPort: port }], // Bind random host port to container's port 3000
-          "3000/tcp": [{ HostPort: port }], // Bind random host port to container's port 3000
+          "3000/tcp": [{ HostPort: '18415' }], // Bind random host port to container's port 3000
+        },
+        RestartPolicy: {
+          Name: "always", // Restarts container on failure
         },
       },
     });
